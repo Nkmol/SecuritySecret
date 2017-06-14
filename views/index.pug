@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= 'Encrypte-R-us'
+  // register form
+  form(method='POST' action='/send')
+    div.form-group
+      label(for='username') Username:
+      input#name.form-control(type='text', placeholder='username' name='username' required)
+    div.form-group
+      label(for='password') Password:
+      input#email.form-control(type='password', placeholder='password' name='password' required)
+    div.form-group
+      label(for='secret') Secret message:
+      input#favoriteBook.form-control(type='text', placeholder='secret tekst' name='secret')
+    button.btn.btn-primary(type='submit') Sign up
