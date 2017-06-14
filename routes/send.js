@@ -9,18 +9,21 @@ router.post('/', function(req, res, next) {
     
     if(body.secret === "") {
         var user = registrated[body.username];
-        if(!user || body.password !== user.password)
+        if(!user)
             return res.json({"message": "Username or password was not valid"});
 
         var bytes  = CryptoJS.AES.decrypt(user.secret, body.password);
         var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+
+        if(plaintext === "")
+            return res.json({"message": "Username or password was not valid"});
 
         res.json({"message": plaintext});
     } 
     else {
         var encryptedsecret = CryptoJS.AES.encrypt(body.secret, body.password);
 
-        registrated[body.username] = {"username": body.username, "password":body.password, "secret":encryptedsecret.toString()};
+        registrated[body.username] = {"username": body.username, "secret":encryptedsecret.toString()};
 
         console.log(registrated);
 
